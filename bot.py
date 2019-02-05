@@ -144,12 +144,17 @@ async def unban(ctx, userName: discord.User):
     await client.unban(userName)
     await client.say("__**Successfully User Has Been Unbanned**__")
 
-@client.command(pass_context = True)
-@commands.has_permissions(administrator_members=True)
-async def mute(ctx, userName: discord.User):
-    
-    role=discord.utils.get(ctx.message.server.roles,name='Muted')
 
+
+@client.command(pass_context = True)
+async def mute(ctx,target:discord.Member):
+    role=discord.utils.get(ctx.message.server.roles,name='Muted')
+   
+    await bot.add_roles(target,role)
+
+@client.command(pass_context = True)
+async def warn(ctx,target:discord.Member):
+    await bot.send_message(target,'You Has Been WARNED!')
 
 @client.command()
 async def say(*args):

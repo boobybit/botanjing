@@ -146,11 +146,17 @@ async def unban(ctx, userName: discord.User):
 
 
 
-@client.command(pass_context = True)
-async def mute(ctx,target:discord.Member):
-    role=discord.utils.get(ctx.message.server.roles,name='Muted')
-   
-    await bot.add_roles(target,role)
+
+   @bot.command(pass_context = True)
+async def mute(ctx, user_id, userName: discord.User):
+    if ctx.message.author.server_permissions.administrator:
+        user = ctx.message.author
+        role = discord.utils.get(user.server.roles, name="Muted")
+        await client.add_roles(user, role)
+     else:
+       embed=discord.Embed(title="Permission Denied.", description="You don't have permission to use this command.", color=0xff00f6)
+       await bot.say(embed=embed)
+
 
 @client.command(pass_context = True)
 async def warn(ctx,target:discord.Member):

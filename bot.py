@@ -56,7 +56,8 @@ async def help(ctx):
     embed.add_field(name ='^leave', value ='The bot leaves the current voice channel.', inline=False)
     embed.add_field(name ='^play', value ='Plays the audio from a youtube url', inline=False)
     embed.add_field(name ='^serverinfo', value ='Gives the server information on the selected user example: ^serverinfo (Name User)', inline=False)
-    embed.add_field(name ='Ban', value ='This Funcion Is Deleted Because For Error! (This Funcion Is Not Available)', inline=False)
+    embed.add_field(name ='^ban', value ='Ban A User from Discord Group', inline=False)
+    embed.add_field(name ='^kick', value ='Kick A User from Discord Group', inline=False)
 
     await client.send_message(author, embed=embed)
 

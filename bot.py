@@ -12,7 +12,7 @@ my_token = 'NTM4OTc3MjY3MTk2NjI0ODk2.DzgSuQ.UzDj_6D0G7FgJAfLFzjO1I2b5s4'
 client = commands.Bot(command_prefix = '^')
 
 client.remove_command('help')
-status = ['^help for commands', 'MUSIC', "Tron Bot"]
+status = ['^help for commands', 'UPDATED', "Annonymous_Forces Bot"]
 
 players = {}
 
@@ -43,21 +43,22 @@ async def on_message(message):
     await client.process_commands(message)
     if message.content.startswith('^help'):
         userID = message.author.id
-        await client.send_message(message.channel, '<@%s> ***Check*** `DM` ***For Information*** :mailbox_with_mail: ' % (userID))
+        await client.send_message(message.channel, '<@%s> ***Check DM For Information!*** :mailbox_with_mail: ' % (userID))
 
 @client.command(pass_context =True)
 async def help(ctx):
     author = ctx.message.author
     embed = discord.Embed(Colour = discord.Colour.orange())
-    embed.set_author(name = 'Help Commands')
-    embed.add_field(name ='^say', value ='Returns what the user says.', inline=False)
-    embed.add_field(name ='^clear', value ='Deletes certain amount of messages, default amount is 10', inline=False)
-    embed.add_field(name ='^join', value ='The bot joins the current voice channel, the user must be in a voice channel to use this comand', inline=False)
-    embed.add_field(name ='^leave', value ='The bot leaves the current voice channel.', inline=False)
-    embed.add_field(name ='^play', value ='Plays the audio from a youtube url', inline=False)
-    embed.add_field(name ='^serverinfo', value ='Gives the server information on the selected user example: ^serverinfo (Name User)', inline=False)
-    embed.add_field(name ='^ban', value ='Ban A User from Discord Group', inline=False)
-    embed.add_field(name ='^kick', value ='Kick A User from Discord Group', inline=False)
+    embed.set_author(name = '***Help Commands***')
+    embed.add_field(name ='^say', value ='***Returns what the user says.***', inline=False)
+    embed.add_field(name ='^clear', value ='***Deletes certain amount of messages, default amount is 10***', inline=False)
+    embed.add_field(name ='^join', value ='***The bot joins the current voice channel, the user must be in a voice channel to use this command***', inline=False)
+    embed.add_field(name ='^leave', value ='***The bot leaves the current voice channel.***', inline=False)
+    embed.add_field(name ='^play', value ='***Plays the audio from a youtube url***', inline=False)
+    embed.add_field(name ='^serverinfo', value ='***Gives the server information on the selected user example: ^serverinfo (Name User)***', inline=False)
+    embed.add_field(name ='^ban', value ='***Ban A User from Discord Group***', inline=False)
+    embed.add_field(name ='^kick', value ='***Kick A User from Discord Group***', inline=False)
+    embed.add_field(name ='^unban', value ='***Unban A User from Discord Group, this command is not successfully.***', inline=False)
 
     await client.send_message(author, embed=embed)
 
@@ -138,7 +139,7 @@ async def ban(ctx, userName: discord.User):
 @commands.has_permissions(administrator_members=True)
 async def unban(ctx, userName: discord.User):
     """Unban A User from server"""
-    await client.kick(userName)
+    await client.unban(userName)
     await client.say("__**Successfully User Has Been Unbanned**__")
 
 @client.command()
@@ -152,7 +153,7 @@ async def say(*args):
 
 @client.command(pass_context=True)
 async def serverinfo(ctx, user: discord.Member):
-    embed = discord.Embed(title="{}'s info".format(user.name), description="Here's what I could find.", color=0x00ff00)
+    embed = discord.Embed(title="{}'s info".format(user.name), description="***Found A User***", color=0x00ff00)
     embed.add_field(name="Name", value=user.name, inline=True)
     embed.add_field(name="ID", value=user.id, inline=True)
     embed.add_field(name="Status", value=user.status, inline=True)

@@ -146,7 +146,7 @@ async def unban(ctx, userName: discord.User):
 
 @client.command(pass_context = True)
 @commands.has_permissions(administrator_members=True)
-async def mute(ctx,target:discord.Member):
+async def mute(ctx, userName: discord.User):
     
     role=discord.utils.get(ctx.message.server.roles,name='Muted')
 

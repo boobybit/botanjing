@@ -59,6 +59,8 @@ async def help(ctx):
     embed.add_field(name ='^ban', value ='***Ban A User from Discord Group***', inline=False)
     embed.add_field(name ='^kick', value ='***Kick A User from Discord Group***', inline=False)
     embed.add_field(name ='^unban', value ='***Unban A User from Discord Group, this command is not successfully.***', inline=False)
+    embed.add_field(name ='^mute', value ='***Mute A User from Discord Group, maybe work!***', inline=False)
+
 
     await client.send_message(author, embed=embed)
 
@@ -141,6 +143,13 @@ async def unban(ctx, userName: discord.User):
     """Unban A User from server"""
     await client.unban(userName)
     await client.say("__**Successfully User Has Been Unbanned**__")
+
+@client.command(pass_context = True)
+@commands.has_permissions(administrator_members=True)
+async def mute(ctx,target:discord.Member):
+    
+    role=discord.utils.get(ctx.message.server.roles,name='Muted')
+
 
 @client.command()
 async def say(*args):

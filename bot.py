@@ -149,32 +149,9 @@ async def unban(ctx, userName: discord.User):
 async def warn(ctx,target:discord.Member):
     await client.send_message(target,'You Has Been WARNED!')
 
-@client.command(pass_context = True)
-async def mujfjfte(self, ctx, *, user:discord.Member):
-        """Mute un utilisateur
-        Requiert la permission de kick"""
 
-        await self.bot.delete_message(ctx.message)
 
-        if ctx.message.author.server_permissions.kick_members == True:
 
-            overwrite = ctx.message.channel.overwrites_for(user) or discord.PermissionOverwrite()
-            overwrite.send_messages = False
-            await self.bot.edit_channel_permissions(ctx.message.channel, user, overwrite)
-            tmp = await self.bot.send_message(ctx.message.channel, "{} is now muted here !".format(user.mention))
-            await asyncio.sleep(5)
-            await self.bot.delete_message(tmp)
-
-        else:
-            tmp = await self.bot.say("```\nVous n'avez pas la permission d'utiliser cette commande\n```")
-            await asyncio.sleep(5)
-            await self.bot.delete_message(tmp)
-
- @client.command(pass_context=True)
-async def mute(ctx,target:discord.Member):
-    role=discord.utils.get(ctx.message.server.roles,name='Muted')
-   
-    await client.add_roles(target,role)
 
 @client.command()
 async def say(*args):

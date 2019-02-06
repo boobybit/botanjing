@@ -128,9 +128,14 @@ async def stop(ctx):
 async def kick(ctx, userName: discord.User):
     """Kick A User from server"""
     await client.kick(userName)
-    await client.say("__**Successfully User Has Been Kicked!**__")
+    await client.say("__**Successfully User Has Been KICKED!**__")
 
-
+@client.command(pass_context = True)
+@commands.has_permissions(ban_members=True)
+async def ban(ctx, userName: discord.User):
+    """Ban A User from server"""
+    await client.ban(userName)
+    await client.say("__**Successfully User Has Been BANNED!**__")
 
 @client.command(pass_context = True)
 @commands.has_permissions(administrator_members=True)

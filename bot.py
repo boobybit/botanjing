@@ -147,7 +147,7 @@ async def unban(ctx, userName: discord.User):
 
 
 
-   @bot.command(pass_context = True)
+   @client.command(pass_context = True)
 async def mute(ctx, user_id, userName: discord.User):
     if ctx.message.author.server_permissions.administrator:
         user = ctx.message.author

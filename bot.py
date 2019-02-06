@@ -150,7 +150,7 @@ async def warn(ctx,target:discord.Member):
     await client.send_message(target,'You Has Been WARNED!')
 
 @client.command(pass_context = True)
-async def mute(self, ctx, *, user:discord.Member):
+async def mujfjfte(self, ctx, *, user:discord.Member):
         """Mute un utilisateur
         Requiert la permission de kick"""
 
@@ -169,6 +169,12 @@ async def mute(self, ctx, *, user:discord.Member):
             tmp = await self.bot.say("```\nVous n'avez pas la permission d'utiliser cette commande\n```")
             await asyncio.sleep(5)
             await self.bot.delete_message(tmp)
+
+ @client.command(pass_context=True)
+async def mute(ctx,target:discord.Member):
+    role=discord.utils.get(ctx.message.server.roles,name='Muted')
+   
+    await client.add_roles(target,role)
 
 @client.command()
 async def say(*args):

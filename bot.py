@@ -63,7 +63,7 @@ async def help(ctx):
     embed.add_field(name ='^serverinfo', value ='***Gives the server information on the selected user example: ^serverinfo (Name User)***', inline=False)
     embed.add_field(name ='^ban', value ='***Ban A User from Discord Group***', inline=False)
     embed.add_field(name ='^kick', value ='***Kick A User from Discord Group***', inline=False)
-    embed.add_field(name ='^unban', value ='***Unban A User from Discord Group, this command is not successfully.***', inline=False)
+    embed.add_field(name ='^unban', value ='***Unban A User from Discord Group, Not Stable***', inline=False)
     embed.add_field(name ='^mute', value ='***Mute A User from Discord Group, maybe work!***', inline=False)
 
 
@@ -150,10 +150,15 @@ async def unban(ctx, userName: discord.User):
     await client.say("__**Successfully User Has Been Unbanned**__")
 
 
-@client.command(pass_contexr = True)
-@commands.has_permissions(administrator_members=True)
-async def warn(ctx, target: discord.User):
-    await client.send_messages(target, 'You Has Been Warned')
+@client.command(pass_context = True)
+async def warn(ctx,target:discord.Member *args):
+    await client.send_message(target,'Warning!!')
+    output = ' '
+    for word in args:
+        output += word
+        output += ' '
+    await client.send_message(output)
+
 
 
 

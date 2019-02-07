@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import bot
-from discord.ext.commands import has_permissions, MissingPermissions
+from discord.ext.commands import has_permissions
 import asyncio
 from itertools import cycle
 import time
@@ -29,12 +29,7 @@ async def change_status():
         await client.change_presence(game=discord.Game(name =current_status))
         await asyncio.sleep(10)
 
-with open('reports.json', encoding='utf-8') as f:
-  try:
-    report = json.load(f)
-  except ValueError:
-    report = {}
-    report['users'] = []
+
 
 @client.event
 async def on_ready():
@@ -155,40 +150,11 @@ async def unban(ctx, userName: discord.User):
     await client.say("__**Successfully User Has Been Unbanned**__")
 
 
+@client.command(pass_contexr = True)
+@commands.has_permissions(administrator_members=True)
+async def warn(ctx, target: discord.User):
+    await client.send_messages(target, 'You Has Been Warned')
 
-@client.command(pass_context = True)
-@has_permissions(manage_roles=True, ban_members=True)
-async def warn(ctx,user:discord.User,*reason:str):
-  if not reason:
-    await client.say("Please provide a reason")
-    return
-  reason = ' '.join(reason)
-  for current_user in report['users']:
-    if current_user['name'] == user.name:
-      current_user['reasons'].append(reason)
-      break
-  else:
-    report['users'].append({
-      'name':user.name,
-      'reasons': [reason,]
-    })
-  with open('reports.json','w+') as f:
-    json.dump(report,f)
-
-@client.command(pass_context = True)
-async def warnings(ctx,user:discord.User):
-  for current_user in report['users']:
-    if user.name == current_user['name']:
-      await client.say(f"{user.name} has been reported {len(current_user['reasons'])} times : {','.join(current_user['reasons'])}")
-      break
-  else:
-    await client.say(f"{user.name} has never been reported")  
-
-@warn.error
-async def kick_error(error, ctx):
-  if isinstance(error, MissingPermissions):
-      text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
-      await client.send_message(ctx.message.channel, text)   
 
 
 

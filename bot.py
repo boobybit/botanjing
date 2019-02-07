@@ -154,28 +154,7 @@ async def unban(ctx, userName: discord.User):
     await client.unban(userName)
     await client.say("__**Successfully User Has Been Unbanned**__")
 
-1
-I'd love to help you with this problem, but there's not enough information for me to assist. You also never asked a question, you just stated things that you want the command to do. – J0hn Oct 2 '18 at 18:47
-add a comment
-1 Answer
-order by  
-up vote
-1
-down vote
-You could do something like this
 
-import discord
-from discord.ext.commands import commands,has_permissions, MissingPermissions
-import json
-
-with open('reports.json', encoding='utf-8') as f:
-  try:
-    report = json.load(f)
-  except ValueError:
-    report = {}
-    report['users'] = []
-
-client = discord.ext.commands.Bot(command_prefix = '?')
 
 @client.command(pass_context = True)
 @has_permissions(manage_roles=True, ban_members=True)

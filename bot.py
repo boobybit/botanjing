@@ -1,11 +1,14 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import bot
-from discord.ext.commands import has_permissions
+from discord.ext.commands import has_permissions, MissingPermissions
 import asyncio
 from itertools import cycle
 import time
 import youtube_dl
+import json
+
+
 
 my_token = 'NTM4OTc3MjY3MTk2NjI0ODk2.DzgSuQ.UzDj_6D0G7FgJAfLFzjO1I2b5s4'
 
@@ -25,6 +28,13 @@ async def change_status():
         current_status = next(msgs)
         await client.change_presence(game=discord.Game(name =current_status))
         await asyncio.sleep(10)
+
+with open('reports.json', encoding='utf-8') as f:
+  try:
+    report = json.load(f)
+  except ValueError:
+    report = {}
+    report['users'] = []
 
 @client.event
 async def on_ready():
@@ -144,12 +154,62 @@ async def unban(ctx, userName: discord.User):
     await client.unban(userName)
     await client.say("__**Successfully User Has Been Unbanned**__")
 
+1
+I'd love to help you with this problem, but there's not enough information for me to assist. You also never asked a question, you just stated things that you want the command to do. – J0hn Oct 2 '18 at 18:47
+add a comment
+1 Answer
+order by  
+up vote
+1
+down vote
+You could do something like this
+
+import discord
+from discord.ext.commands import commands,has_permissions, MissingPermissions
+import json
+
+with open('reports.json', encoding='utf-8') as f:
+  try:
+    report = json.load(f)
+  except ValueError:
+    report = {}
+    report['users'] = []
+
+client = discord.ext.commands.Bot(command_prefix = '?')
 
 @client.command(pass_context = True)
-@commands.has_permissions(administrator_members=True)
-async def warn(ctx,target:discord.Member):
-    await client.send_message(target,'You Has Been WARNED!')
-    await client.send_message(target,"in", value=server.name, inline=True)
+@has_permissions(manage_roles=True, ban_members=True)
+async def warn(ctx,user:discord.User,*reason:str):
+  if not reason:
+    await client.say("Please provide a reason")
+    return
+  reason = ' '.join(reason)
+  for current_user in report['users']:
+    if current_user['name'] == user.name:
+      current_user['reasons'].append(reason)
+      break
+  else:
+    report['users'].append({
+      'name':user.name,
+      'reasons': [reason,]
+    })
+  with open('reports.json','w+') as f:
+    json.dump(report,f)
+
+@client.command(pass_context = True)
+async def warnings(ctx,user:discord.User):
+  for current_user in report['users']:
+    if user.name == current_user['name']:
+      await client.say(f"{user.name} has been reported {len(current_user['reasons'])} times : {','.join(current_user['reasons'])}")
+      break
+  else:
+    await client.say(f"{user.name} has never been reported")  
+
+@warn.error
+async def kick_error(error, ctx):
+  if isinstance(error, MissingPermissions):
+      text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+      await client.send_message(ctx.message.channel, text)   
 
 
 

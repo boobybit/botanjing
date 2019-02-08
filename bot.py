@@ -150,14 +150,10 @@ async def unban(ctx, userName: discord.User):
     await client.say("__**Successfully User Has Been Unbanned**__")
 
 
-@client.command(pass_context = True)
-async def warn(ctx,target:discord.Member *args):
+@client.command(pass_context=True)
+async def warn(ctx,target:discord.Member):
     await client.send_message(target,'Warning!!')
-    output = ' '
-    for word in args:
-        output += word
-        output += ' '
-    await client.send_message(output)
+    await client.say("__**Successfully User Has Been Warned")
 
 
 

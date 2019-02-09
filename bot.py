@@ -42,8 +42,7 @@ async def on_member_join(member):
     role = discord.utils.get(member.server.roles, name='Newcomer')
     await client.add_roles(member, role)
  
-im making a leveling system and so i know i have to use a return for my changes on on_member_join, but i couldnt figure it out
-Heres my code:
+
 
 
 @client.event

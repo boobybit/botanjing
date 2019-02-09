@@ -6,6 +6,7 @@ import asyncio
 from itertools import cycle
 import time
 import youtube_dl
+import json
 
 
 
@@ -40,6 +41,50 @@ async def on_ready():
 async def on_member_join(member):
     role = discord.utils.get(member.server.roles, name='Newcomer')
     await client.add_roles(member, role)
+ 
+im making a leveling system and so i know i have to use a return for my changes on on_member_join, but i couldnt figure it out
+Heres my code:
+
+
+@client.event
+async def on_member_join(member):
+
+    with open('leveling.json', 'r') as f:
+        users = json.load(f)
+
+    await update_data(users, member)
+   
+    with open('leveling.json', 'w') as f:
+        json.dump(users, f)
+
+    with open('leveling.json', 'r') as f:
+        users = json.load(f)
+
+    await update_data(users, message.author)
+    await add_experience(users, message.author, 5)
+    await level_up(users, message.author, message.channel)
+
+    
+    with open('leveling.json', 'w') as f:
+        json.dump(users, f)
+
+async def update_data(users, user):
+    if not user.id in users:
+        user[user.id] = {}
+        users [user.id]['experience'] = 0
+        users [user.id] ['level'] = 1
+    
+async def add_experience(users, user, exp):
+    users[user.id]['experiance'] += exp
+
+async def level_up(users, user, channel):
+    experience = users[users.id]['experience']
+    lvl_start = users[user.id]['level']
+    lvl_end = int(experience ** (1/4))
+
+    if lvl_start < lvl_end:
+        await bot.say(channel, '{} Has leveled up to level {}!').format(user.mention, level_end)
+        users[user.id]['level'] = level_end
 
 
 @client.event

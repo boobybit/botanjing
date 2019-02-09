@@ -6,7 +6,7 @@ import asyncio
 from itertools import cycle
 import time
 import youtube_dl
-import json
+
 
 
 
@@ -150,10 +150,6 @@ async def unban(ctx, userName: discord.User):
     await client.say("__**Successfully User Has Been Unbanned**__")
 
 
-@client.command(pass_context=True)
-async def warn(ctx,target:discord.Member,type):
-    await client.send_messages(target, ''f'{type}')
-    await client.say("Successfully User Has Been Warned")
 
 
 

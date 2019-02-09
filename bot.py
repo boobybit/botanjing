@@ -154,7 +154,7 @@ async def unban(ctx, userName: discord.User):
 async def warn(ctx,target:discord.Member, type):
     await client.send_messages(target, 'Warning: 'f'{type}')
     await client.say("Successfully User Has Been Warned")
-    await client.say('With Message 'f'{type}')
+
 
 
 

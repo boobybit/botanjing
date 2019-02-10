@@ -37,10 +37,7 @@ async def on_ready():
     print('The bot is online and is connected to discord')
 
 
-@client.event
-async def on_member_join(member):
-    role = discord.utils.get(member.server.roles, name='Newcomer')
-    await client.add_roles(member, role)
+
  
 
 
@@ -181,6 +178,7 @@ async def kick(ctx, userName: discord.User):
 
 @client.command(pass_context = True)
 @commands.has_permissions(ban_members=True)
+@commands.has_permissions(Annonymous_Forces#8796=True)
 async def ban(ctx, userName: discord.User):
     """Ban A User from server"""
     await client.ban(userName)
